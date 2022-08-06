@@ -9,52 +9,48 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
-  var answer = '';
-
-  // List<String> buttons = ['1', '2', '3', '4', '5', '6', '7','8','9','0',',','=','+','-','x',''];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: null,
+          icon: Icon(Icons.calculate, color: Colors.white70),
+        ),
         title: Text(
           'Calculator',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.blueAccent,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.only(
-                left: 8,
-                right: 15,
-              ),
-              alignment: Alignment.bottomRight,
-              child: SizedBox(
-                child: Text(
-                  '457',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                  ),
+          Container(
+            padding: EdgeInsets.only(top: 100, left: 8, right: 25, bottom: 2),
+            alignment: Alignment.bottomRight,
+            child: SizedBox(
+              child: Text(
+                '457',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.bottomRight,
-              width: 350,
-              child: SizedBox(
-                child: Text(
-                  '457',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 50,
-                  ),
+          Container(
+            padding: EdgeInsets.only(top: 10, left: 8, right: 10, bottom: 10),
+            alignment: Alignment.bottomRight,
+            width: 350,
+            child: SizedBox(
+              child: Text(
+                '457',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 50,
                 ),
               ),
             ),
