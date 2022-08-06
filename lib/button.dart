@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 
 class RoundIcon extends StatelessWidget {
-  RoundIcon({this.onPressed, required this.color, this.child});
-  final Function()? onPressed;
+  RoundIcon(
+      {this.callback, required this.color, required this.text, this.style});
+
+  final Function? callback;
   final Color color;
-  final Widget? child;
+  final String text;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: onPressed,
-      child: child,
-      constraints: BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0,
+    return MaterialButton(
+      minWidth: 56.0,
+      height: 56.0,
+      onPressed: () => callback!(text),
+      child: Text(
+        text,
+        style: style,
+        textAlign: TextAlign.center,
       ),
       shape: CircleBorder(),
-      fillColor: color,
+      color: color,
     );
   }
 }

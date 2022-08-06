@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'button.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({Key? key}) : super(key: key);
@@ -9,6 +8,65 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
+  late int firstNum;
+  late int secondNum;
+  late String? history = '';
+  late String operation;
+  late String result;
+  late String? textToDisplay = '';
+
+  void btnClick(String btnValue) {
+    print(btnValue);
+    if (btnValue == 'AC') {
+      firstNum = 0;
+      secondNum = 0;
+      result = '';
+      textToDisplay = '';
+      history = '';
+    } else if (btnValue == 'C') {
+      firstNum = 0;
+      secondNum = 0;
+      result = '';
+      textToDisplay = '';
+    } else if (btnValue == '<') {
+      result = textToDisplay!.substring(0, textToDisplay!.length - 1);
+    } else if (btnValue == '+' ||
+        btnValue == '-' ||
+        btnValue == 'x' ||
+        btnValue == '/') {
+      firstNum = int.parse(textToDisplay!);
+      result = '';
+      operation = btnValue;
+    } else if (btnValue == '=') {
+      secondNum = int.parse(textToDisplay!);
+      if (operation == '+') {
+        result = (firstNum + secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == '-') {
+        result = (firstNum - secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == 'x') {
+        result = (firstNum * secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == '/') {
+        result = (firstNum / secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+    } else {
+      result = int.parse(textToDisplay! + btnValue).toString();
+    }
+    setState(() {
+      textToDisplay = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +91,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             alignment: Alignment.bottomRight,
             child: SizedBox(
               child: Text(
-                '457',
+                history!,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 30,
@@ -42,12 +100,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 10, left: 8, right: 10, bottom: 10),
+            padding: EdgeInsets.only(top: 20, left: 8, right: 25, bottom: 2),
             alignment: Alignment.bottomRight,
-            width: 350,
             child: SizedBox(
               child: Text(
-                '457',
+                textToDisplay!,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 50,
@@ -67,45 +124,34 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       children: [
                         Expanded(
                           child: RoundIcon(
-                            onPressed: () {
-                              ;
-                            },
-                            color: Colors.grey.shade600,
-                            child: Text(
-                              'AC',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                            callback: btnClick,
+                            text: 'AC',
+                            color: Colors.grey.shade500,
+                            style: TextStyle(fontSize: 23, color: Colors.white),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
-                            color: Colors.grey.shade600,
-                            child: Text(
-                              'C',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                            callback: btnClick,
+                            text: 'C',
+                            color: Colors.grey.shade500,
+                            style: TextStyle(fontSize: 23, color: Colors.white),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
-                            color: Colors.grey.shade600,
-                            child: Text(
-                              '+/-',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                            callback: btnClick,
+                            text: '+/-',
+                            color: Colors.grey.shade500,
+                            style: TextStyle(fontSize: 23, color: Colors.white),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
-                            color: Colors.grey.shade600,
-                            child: Text(
-                              '%',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                            callback: btnClick,
+                            text: '<',
+                            color: Colors.grey.shade500,
+                            style: TextStyle(fontSize: 23, color: Colors.white),
                           ),
                         ),
                       ],
@@ -116,116 +162,34 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       children: [
                         Expanded(
                           child: RoundIcon(
+                            callback: btnClick,
+                            text: '7',
                             color: Colors.white,
-                            child: Text(
-                              '7',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
+                            callback: btnClick,
+                            text: '8',
                             color: Colors.white,
-                            child: Text(
-                              '8',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
+                            callback: btnClick,
+                            text: '9',
                             color: Colors.white,
-                            child: Text(
-                              '9',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
-                          ),
-                        ),
-                        Expanded(child: RoundIcon(color: Colors.blue.shade300)),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: RoundIcon(
-                            color: Colors.white,
-                            child: Text(
-                              '4',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
-                            color: Colors.white,
-                            child: Text(
-                              '5',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: RoundIcon(
-                            color: Colors.white,
-                            child: Text(
-                              '6',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
-                          ),
-                        ),
-                        Expanded(child: RoundIcon(color: Colors.blue.shade300)),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: RoundIcon(
-                            color: Colors.white,
-                            child: Text(
-                              '1',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: RoundIcon(
-                            color: Colors.white,
-                            child: Text(
-                              '2',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: RoundIcon(
-                            color: Colors.white,
-                            child: Text(
-                              '3',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: RoundIcon(
+                            callback: btnClick,
+                            text: '/',
                             color: Colors.blue.shade300,
-                            child: Text(
-                              '-',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
                           ),
                         ),
                       ],
@@ -236,42 +200,110 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       children: [
                         Expanded(
                           child: RoundIcon(
+                            callback: btnClick,
+                            text: '4',
                             color: Colors.white,
-                            child: Text(
-                              '0',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
+                            callback: btnClick,
+                            text: '5',
                             color: Colors.white,
-                            child: Text(
-                              '.',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.black),
-                            ),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
+                            callback: btnClick,
+                            text: '6',
+                            color: Colors.white,
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
+                        ),
+                        Expanded(
+                          child: RoundIcon(
+                            callback: btnClick,
+                            text: 'x',
+                            color: Colors.blue.shade300,
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: RoundIcon(
+                            callback: btnClick,
+                            text: '1',
+                            color: Colors.white,
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
+                        ),
+                        Expanded(
+                          child: RoundIcon(
+                            callback: btnClick,
+                            text: '2',
+                            color: Colors.white,
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
+                        ),
+                        Expanded(
+                          child: RoundIcon(
+                            callback: btnClick,
+                            text: '3',
+                            color: Colors.white,
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
+                        ),
+                        Expanded(
+                          child: RoundIcon(
+                            callback: btnClick,
+                            text: '-',
+                            color: Colors.blue.shade300,
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: RoundIcon(
+                            callback: btnClick,
+                            text: '0',
+                            color: Colors.white,
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
+                        ),
+                        Expanded(
+                          child: RoundIcon(
+                            callback: btnClick,
+                            text: '.',
+                            color: Colors.white,
+                            style: TextStyle(fontSize: 25, color: Colors.black),
+                          ),
+                        ),
+                        Expanded(
+                          child: RoundIcon(
+                            callback: btnClick,
+                            text: '=',
                             color: Colors.blue,
-                            child: Text(
-                              '=',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
                           ),
                         ),
                         Expanded(
                           child: RoundIcon(
+                            callback: btnClick,
+                            text: '+',
                             color: Colors.blue.shade300,
-                            child: Text(
-                              '+',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
+                            style: TextStyle(fontSize: 25, color: Colors.black),
                           ),
                         ),
                       ],
